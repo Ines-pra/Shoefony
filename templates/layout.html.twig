@@ -20,18 +20,18 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/">Shoefony</a>
+                    <a class="navbar-brand" href="{{ path('main_homepage') }}">Shoefony</a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="/presentation">Présentation</a>
+                            <a href="{{ path('main_presentation') }}">Présentation</a>
                         </li>
                         <li>
-                            <a href="/store/product-list">Nos produits</a>
+                            <a href="{{ path('store_list_product') }}">Nos produits</a>
                         </li>
                         <li>
-                            <a href="/contact">Contact</a>
+                            <a href="{{ path('main_contact') }}">Contact</a>
                         </li>
                     </ul>
 
