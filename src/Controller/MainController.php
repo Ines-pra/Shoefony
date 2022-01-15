@@ -13,12 +13,16 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Mailer\ContactMailer;
 use App\Service\MessageGenerator;
 
+use Doctrine\ORM\EntityManagerInterface;
+
 class MainController extends AbstractController 
 {
     private ContactMailer $mailer;
+    private $em;
 
-    public function __construct(ContactMailer $mailer)
+    public function __construct(ContactMailer $mailer,EntityManagerInterface $em)
     {
+        $this->em = $em;
         $this->mailer = $mailer;
     }   
 
@@ -52,14 +56,17 @@ class MainController extends AbstractController
     {
 
         $contact = new Contact();
+
         $form = $this->createForm(ContactType::class, $contact);
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
-            if ($form->isSubmitted() && $form->isValid()) {
-                $this->addFlash('success', 'Merci, votre message a bien été pris en compte !');
-                $this->mailer->sendMail($contact);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($contact);
+            $this->em->flush();
+
+            $this->addFlash('success', 'Merci, votre message a bien été pris en compte !');
+            // $this->mailer->sendMail($contact);
             return $this->redirectToRoute('main_contact');
         }
 
@@ -68,5 +75,4 @@ class MainController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-}
 }

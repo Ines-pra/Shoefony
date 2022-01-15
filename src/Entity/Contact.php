@@ -3,13 +3,67 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-class Contact 
-{
-    private ?string $firstname = null;
-    private ?string $lastname = null;
-    private ?string $email = null;
-    private ?string $message = null;
+use DateTime;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Date;
 
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\Contact")
+ * @ORM\Table(name="app_contact")
+ */
+
+class Contact 
+{   
+    /**
+    * @ORM\Id()
+    * @ORM\GeneratedValue() 
+    * @ORM\Column(type="integer")
+    */
+    private $id;
+
+    
+    /**
+     * @ORM\Column(type="string",length=255)
+     */
+    private $firstname;
+
+    
+    /**
+     * @ORM\Column(type="string",length=255)
+     */
+    private $lastname;
+
+
+    /**
+     * @ORM\Column(type="string",length=255)
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $message;
+
+     /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+
+    public function __construct()
+    {
+        $this->created_at = new \DateTime();
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setId(string $id)
+    {
+        return $this->id = $id;
+    }
+    
     public function getFirstName()
     {
         return $this->firstname;
@@ -51,6 +105,17 @@ class Contact
     public function setMessage(string $message)
     {
         return $this->message = $message;
+    }
+
+    public function getCreatedAt(): ?\DateTime
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(DateTime $created_at): self
+    {
+        $this->created_at = $created_at;
+        return $this;
     }
     
 
