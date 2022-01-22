@@ -37,6 +37,11 @@ use Doctrine\ORM\Mapping as ORM;
        * @ORM\Column(type="datetime")
        */
       private $created_at;
+
+      public function __construct()
+      {
+          $this->created_at = new \DateTime();
+      }
       
       public function getId()
       {
@@ -78,13 +83,14 @@ use Doctrine\ORM\Mapping as ORM;
           return $this->price = $price;
       }
 
-      public function getCreatedAt()
+      public function getcreatedAt(): ?\DateTime
       {
           return $this->created_at;
       }
   
-      public function setCreatedAt(string $created_at)
+      public function setcreatedAt(\DateTime $created_at): self
       {
-          return $this->created_at = $created_at;
+          $this->created_at = $created_at;
+          return $this;
       }
  }
