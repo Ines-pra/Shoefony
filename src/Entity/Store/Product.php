@@ -3,6 +3,7 @@
 namespace App\Entity\Store;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Store\Image;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Store\ProductRepository")
@@ -37,6 +38,16 @@ use Doctrine\ORM\Mapping as ORM;
        * @ORM\Column(type="datetime")
        */
       private $created_at;
+
+      /**
+       * @ORM\OneToOne(targetEntity="App\Entity\Store\Image", cascade={"persist","remove"})
+       * @ORM\JoinColumn(nullable=false, name="sto_image_id")
+       */
+
+    //   
+      
+       
+      private $image;
 
       public function __construct()
       {
@@ -91,6 +102,17 @@ use Doctrine\ORM\Mapping as ORM;
       public function setcreatedAt(\DateTime $created_at): self
       {
           $this->created_at = $created_at;
+          return $this;
+      }
+
+      public function getImage(): ?Image
+      {
+        return $this->image;
+      }
+
+      public function setImage(Image $image): self
+      {
+          $this->image = $image;
           return $this;
       }
  }
