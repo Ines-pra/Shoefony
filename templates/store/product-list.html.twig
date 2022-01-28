@@ -17,7 +17,7 @@
                 <div class="row text-center">
                     {% for product in products %}
 
-					{# <p> {{ product[1] }} </p> #}
+					{# <p> {{ product.image_id.id }} </p> #}
 						
 						<div class="col-md-4 col-sm-6 hero-feature">
 							<div class="thumbnail">
@@ -30,8 +30,8 @@
 									<h3> {{ product.name|capitalize }} </h3>
 									<p>{{ product.description }}</p>
 									<p>
-										<span class="badge">{{ product.price }}</span>
-										<a href=" {{ asset('/store/product/' ~ product.id ~ '/details/Chaussures') }}" class="btn btn-default">Voir la fiche</a>
+										<span class="badge">{{ product.price }}€</span>
+										<a href=" {{ asset('/store/product/' ~ product.id ~ '/details/' ~ product.slug ~ '') }}" class="btn btn-default">Voir la fiche</a>
 									</p>
 								</div>
 							</div>

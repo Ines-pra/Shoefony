@@ -19,7 +19,9 @@
                     </p>
                     <div class="row">
                         <div class="thumbnail">
-                            <img class="img-responsive" src="img/products/shoe-1.jpg" alt="">
+                        {# {% for product in products %} #}
+
+                            <img class="img-responsive" src="{{asset('img/products/shoe-' ~ id ~ '.png')}}" alt="" style="width:100%; border-radius:25px;">
                             <div class="caption-full">
                                 <h4 class="pull-right"><span class="badge">120,00 €</span></h4>
                                 <h3>Nom du produit</h3>
@@ -33,6 +35,7 @@
                                     qui officia deserunt mollit anim id est laborum
                                 </p>
                             </div>
+                        {# {% endfor %} #}
                         </div>	
 
                         <div class="well">

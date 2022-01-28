@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Store\Product;
+
 use App\Entity\Contact;
 use App\Form\ContactType;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,8 +34,12 @@ class MainController extends AbstractController
 
     public function main() : Response
     {
+
+        $products = $this->em->getRepository(Product::class)->findAll();
+        
         return $this->render('main/index.html.twig',[
             'title' => "Homepage",
+            'products' => $products,
         ]);
     }
 

@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Validator\Constraints\Length;
 
 class StoreController extends AbstractController
 {
@@ -26,11 +25,15 @@ class StoreController extends AbstractController
 
     public function store(int $id, string $slug, Request $request) : Response
     {
+        
+        $products = $this->em->getRepository(Product::class)->findAll();
+
         return $this->render('store/product.html.twig', [
             'title' => "Store",
             'controller_name' => 'StoreController',
             'id' => $id,
             'slug' => $slug,
+            'products' => $products,
             'ip' => $request->getClientIp()
         ]);
     }

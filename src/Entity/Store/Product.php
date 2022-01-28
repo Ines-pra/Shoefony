@@ -40,8 +40,19 @@ use App\Entity\Store\Image;
       private $created_at;
 
       /**
+       * @ORM\Column(type="string",length=255)
+       */
+      private $bigDescription;
+
+      /**
+       * @ORM\Column(type="string",length=255)
+       */
+      private $slug;
+
+
+      /**
        * @ORM\OneToOne(targetEntity="App\Entity\Store\Image", cascade={"persist","remove"})
-       * @ORM\JoinColumn(nullable=false, name="sto_image_id")
+       * @ORM\JoinColumn(nullable=false, name="image_id")
        */
 
     //   
@@ -114,5 +125,25 @@ use App\Entity\Store\Image;
       {
           $this->image = $image;
           return $this;
+      }
+
+      public function getBigDescription()
+      {
+          return $this->bigDescription;
+      }
+  
+      public function setBigDescription(string $bigDescription)
+      {
+          return $this->bigDescription = $bigDescription;
+      }
+
+      public function getSlug()
+      {
+          return $this->slug;
+      }
+  
+      public function setSlug(string $slug)
+      {
+          return $this->slug = $slug;
       }
  }
