@@ -16,14 +16,21 @@
                 <p class="lead">Nos produits " Toutes les marques "</p>
                 <div class="row text-center">
                     {% for product in products %}
+
+					{# <p> {{ product[1] }} </p> #}
+						
 						<div class="col-md-4 col-sm-6 hero-feature">
 							<div class="thumbnail">
-								<img src="{{ asset('img/products/shoe-' ~ product.id ~ '.jpg') }}" alt="Nom du produit">
+							{% for image in images %}
+								{% if product.id == image.id %}
+									<img src="{{ asset( image.url ) }}" alt="{{ product.id }}" style="width: 100%; border-radius:10px;" >
+								{% endif %}
+							{% endfor %}
 								<div class="caption">
 									<h3> {{ product.name|capitalize }} </h3>
-									<p>Une description courte du produit sera affichée à cet endroit.</p>
+									<p>{{ product.description }}</p>
 									<p>
-										<span class="badge">120,00 €</span>
+										<span class="badge">{{ product.price }}</span>
 										<a href=" {{ asset('/store/product/' ~ product.id ~ '/details/Chaussures') }}" class="btn btn-default">Voir la fiche</a>
 									</p>
 								</div>

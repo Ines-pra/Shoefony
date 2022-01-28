@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Store\Product;
+use App\Entity\Store\Image;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Validator\Constraints\Length;
 
 class StoreController extends AbstractController
 {
@@ -39,12 +41,12 @@ class StoreController extends AbstractController
     public function product_list(): Response
     {
         $products = $this->em->getRepository(Product::class)->findAll();
-
-        // print_r($products);
+        $images = $this->em->getRepository(Image::class)->findAll();
 
         return $this->render('store/product-list.html.twig', [
             'title' => 'Store',
             'products' => $products,
+            'images' => $images,
         ]);
     }
 
