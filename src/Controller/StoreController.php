@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Store\Product;
 use App\Entity\Store\Image;
+use App\Entity\Store\Brand;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class StoreController extends AbstractController
 {
@@ -28,12 +30,29 @@ class StoreController extends AbstractController
         
         $products = $this->em->getRepository(Product::class)->findAll();
 
+        $brands = $this->em->getRepository(Brand::class)->findAll();
+
+
+        // $product = $this->em->getRepository(Product::class)->find($id);
+
+        // if (!$product) 
+        // {
+        //     throw new NotFoundHttpException('Le produit d\'id '.$id.'n\'existe pas !');
+        // }
+
+        // $colors = $this->colorRepository->findAll();
+
+        // foreach ($colors as $color) {
+        //     $product->addColors($color);
+        // }
+
         return $this->render('store/product.html.twig', [
             'title' => "Store",
             'controller_name' => 'StoreController',
             'id' => $id,
             'slug' => $slug,
             'products' => $products,
+            'brands' => $brands,
             'ip' => $request->getClientIp()
         ]);
     }
@@ -45,23 +64,14 @@ class StoreController extends AbstractController
     {
         $products = $this->em->getRepository(Product::class)->findAll();
         $images = $this->em->getRepository(Image::class)->findAll();
+        $brands = $this->em->getRepository(Brand::class)->findAll();
 
         return $this->render('store/product-list.html.twig', [
             'title' => 'Store',
             'products' => $products,
             'images' => $images,
+            'brands' => $brands,
         ]);
     }
 
-    /**
-    * @Route("/store/product-detail",name="store_detail_product",methods={"GET"})
-     */
-    public function product_detail(int $id, string $slug):Response
-    {
-        return $this->render('store/product-detail.html.twig', [
-            'controller_name' => 'Store',
-            'id' => $id,
-            'slug' => $slug
-        ]);
-    }
 }
