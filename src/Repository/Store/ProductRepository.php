@@ -19,32 +19,57 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-    // /**
-    //  * @return Product[] Returns an array of Product objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+    // public function myFindAll() : array
+    // {
+    //     return $this 
+    //         ->createQueryBuilder('p')
+    //         ->getQuery()
+    //         ->getResult();
+    // }
 
-    /*
-    public function findOneBySomeField($value): ?Product
+    /**
+     * @return Product[]
+     */
+    public function findByNameAndCreatedAt() : Array
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
+        return $this
+            ->createQueryBuilder('p')
+            ->orderBy('p.created_at', 'DESC')
+            ->setMaxResults(4)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
+    
+    public function whereCurrentYear() 
+    {
+        return $this 
+            // ->createQueryBuilder('p')
+            // // ->orderBy('p.created_at', 'DESC')
+            // ->andWhere('p.created_at BETWEEN :start and :end')
+            // ->setParameter('start', new \DateTime(date('Y').'-01-01'))
+            // ->setParameter('end', new \DateTime(date('Y').'12-31'))
+            // ->setMaxResults(4)
+            // ->getQuery()
+            // ->getResult();
+
+            // ->createQueryBuilder('p')
+            // ->leftJoin('p.comments', 'c')
+            // ->groupBy('p')
+            // ->orderBy('COUNT(c.id)', 'DESC')
+            // ->setMaxResults(4)
+            // ->getQuery()
+            // ->getResult();
+
+            ->createQueryBuilder('p')
+            ->addSelect('p')
+            ->addSelect('COUNT(c.id) AS HIDDEN comment_count')
+            ->leftJoin('p.comments', 'c')
+            ->groupBy('p')
+            ->orderBy('comment_count', 'DESC')
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult();
+
+    }
+
 }

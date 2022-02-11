@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Store\Product;
+use App\Repository\Store\ProductRepository;
 
 use App\Entity\Contact;
 use App\Form\ContactType;
@@ -13,19 +14,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Mailer\ContactMailer;
-use App\Service\MessageGenerator;
-
 use Doctrine\ORM\EntityManagerInterface;
 
 class MainController extends AbstractController 
 {
-    private ContactMailer $mailer;
-    private $em;
 
-    public function __construct(ContactMailer $mailer,EntityManagerInterface $em)
+    public function __construct(
+        private ContactMailer $mailer, 
+        private EntityManagerInterface $em, 
+        private ProductRepository $productRepository)
     {
-        $this->em = $em;
-        $this->mailer = $mailer;
     }   
 
     /** 
@@ -34,12 +32,14 @@ class MainController extends AbstractController
 
     public function main() : Response
     {
-
-        $products = $this->em->getRepository(Product::class)->findAll();
         
+        $productsRecent =  $this->productRepository->findByNameAndCreatedAt();
+        $productsCurrent =  $this->productRepository->whereCurrentYear();
+      
         return $this->render('main/index.html.twig',[
             'title' => "Homepage",
-            'products' => $products,
+            'productsR' => $productsRecent,
+            'productsC' => $productsCurrent,
         ]);
     }
 

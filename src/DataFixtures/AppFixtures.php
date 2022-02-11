@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Store\Brand;
 use App\Entity\Store\Color;
+use App\Entity\Store\Comment;
 use App\Entity\Store\Product;
 use App\Entity\Store\Image;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -20,6 +21,24 @@ class AppFixtures extends Fixture
     //     $this->em = $em;
     // }
 
+    private const DATA_COMMENTS = [
+        [
+            'pseudo' => 'User1',
+            'message' => 'Comment 1'
+        ],
+        [
+            'pseudo' => 'User2',
+            'message' => 'Comment 2'
+        ],
+        [
+            'pseudo' => 'User3',
+            'message' => 'Comment 3'
+        ],
+        [
+            'pseudo' => 'User4',
+            'message' => 'Comment 4'
+        ],
+    ];
 
     private const DATA_BRANDS = [
         ['Adidas'],
@@ -48,6 +67,7 @@ class AppFixtures extends Fixture
         $this->loadBrands();
         $this->loadColors();
         $this->loadProducts();
+        // $this->loadComments();
         
         $manager->flush();
     }
@@ -181,13 +201,10 @@ class AppFixtures extends Fixture
         for ($i = 1; $i <= 20; $i++) 
         {
             $product = new Product();
-            $product->setName($listProduct[$i]['nom']);
-            
-            $product->setBrand($this->getRandomEntityReference(Brand::class, self::DATA_BRANDS));
-            
+            $product->setName($listProduct[$i]['nom']);            
+            $product->setBrand($this->getRandomEntityReference(Brand::class, self::DATA_BRANDS));            
             $product->setDescription($listProduct[$i]['description']);
-            $product->setPrice(mt_rand(10, 100));
-            
+            $product->setPrice(mt_rand(10, 100));            
             $product->setSlug($listProduct[$i]['slug']);      
             $product->setBigDescription($listProduct[$i]['bigD']);
 
@@ -206,8 +223,22 @@ class AppFixtures extends Fixture
                 }
             }
 
+            for($k = 0; $k < random_int(0,20); $k++){
+                $randomComment = random_int(0, count(self::DATA_COMMENTS)-1);
+                $comment = (new Comment())
+                    ->setPseudo(self::DATA_COMMENTS[$randomComment]['pseudo'])
+                    ->setMessage(self::DATA_COMMENTS[$randomComment]['message'])
+                ;
+                    
+                $product->addComment($comment);
+                $this->manager->persist($comment);
+
+
+        }
+
             $this->manager->persist($image);
             $this->manager->persist($product);
+            sleep(1);
         }
     }
 
@@ -237,5 +268,21 @@ class AppFixtures extends Fixture
     private function getRandomEntityReference(string $entityClass, array $data): object {
         return $this->getReference($entityClass . random_int(0, count($data) - 1));
     }
+
+    // private function loadComments(): void {
+
+    //     foreach (self::DATA_COMMENTS as $key => [$message]) {
+    //         $comment = new Comment();
+    //         $comment->setPseudo('Anonyme');
+    //         $comment->setMessage($message);
+
+    //         // $product = new Product...
+    //         // $comment->setProductId($product);
+
+    //         $this->manager->persist($comment);
+    //         $this->addReference(Comment::class . $key, $comment);
+    //         sleep(1);
+    //     }
+    // }
 
 }

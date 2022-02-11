@@ -33,11 +33,10 @@
                 </div>
             </div>
             <div class="row text-center">
-            {% for product in products %}
-            {% if product.id <= 4 %}
+            {% for product in productsR %}
                 <div class="col-md-3 col-sm-6 hero-feature">
                     <div class="thumbnail">
-                        <img src="{{ asset('img/products/shoe-' ~ product.id ~ '.png') }}" alt="Nom du produit">
+                        <img src="{{ asset('' ~ product.image.url ~ '') }}" alt="{{ product.image.alt }}">
                         <div class="caption">
                             <h3> {{ product.name }} </h3>
                             <p>{{ product.description }}</p>
@@ -48,7 +47,6 @@
                         </div>
                     </div>
                 </div>
-            {% endif %}
             {% endfor %}
             </div>
 
@@ -61,11 +59,10 @@
             </div>
             
             <div class="row text-center">
-            {% for product in products %}
-            {% if (product.id <= 8) and (product.id >= 5) %}
+            {% for product in productsC %}
                 <div class="col-md-3 col-sm-6 hero-feature">
                     <div class="thumbnail">
-                        <img src="{{ asset('img/products/shoe-' ~ product.id ~ '.png') }}" alt="Nom du produit">
+                        <img src="{{ asset('' ~ product.image.url ~ '') }}" alt="{{ product.image.alt }}">
                         <div class="caption">
                             <h3> {{ product.name }} </h3>
                             <p>{{ product.description }}</p>
@@ -76,7 +73,6 @@
                         </div>
                     </div>
                 </div>
-            {% endif %}
             {% endfor %}
             </div>
 
