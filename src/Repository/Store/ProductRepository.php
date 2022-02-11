@@ -43,33 +43,23 @@ class ProductRepository extends ServiceEntityRepository
     public function whereCurrentYear() 
     {
         return $this 
-            // ->createQueryBuilder('p')
-            // // ->orderBy('p.created_at', 'DESC')
-            // ->andWhere('p.created_at BETWEEN :start and :end')
-            // ->setParameter('start', new \DateTime(date('Y').'-01-01'))
-            // ->setParameter('end', new \DateTime(date('Y').'12-31'))
-            // ->setMaxResults(4)
-            // ->getQuery()
-            // ->getResult();
-
-            // ->createQueryBuilder('p')
-            // ->leftJoin('p.comments', 'c')
-            // ->groupBy('p')
-            // ->orderBy('COUNT(c.id)', 'DESC')
-            // ->setMaxResults(4)
-            // ->getQuery()
-            // ->getResult();
-
             ->createQueryBuilder('p')
-            ->addSelect('p')
-            ->addSelect('COUNT(c.id) AS HIDDEN comment_count')
             ->leftJoin('p.comments', 'c')
             ->groupBy('p')
-            ->orderBy('comment_count', 'DESC')
+            ->orderBy('COUNT(c.id)', 'DESC')
             ->setMaxResults(4)
             ->getQuery()
             ->getResult();
+    }
 
+    public function getProductsWithBrand(int $brand):array{
+        return $this
+            ->createQueryBuilder('p')
+            ->where('p.Brands = :brand')
+            ->setParameter('brand', $brand)
+            ->getQuery()
+            ->getResult();    
+        ;
     }
 
 }
