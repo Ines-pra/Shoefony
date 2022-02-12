@@ -269,20 +269,5 @@ class AppFixtures extends Fixture
         return $this->getReference($entityClass . random_int(0, count($data) - 1));
     }
 
-    // private function loadComments(): void {
-
-    //     foreach (self::DATA_COMMENTS as $key => [$message]) {
-    //         $comment = new Comment();
-    //         $comment->setPseudo('Anonyme');
-    //         $comment->setMessage($message);
-
-    //         // $product = new Product...
-    //         // $comment->setProductId($product);
-
-    //         $this->manager->persist($comment);
-    //         $this->addReference(Comment::class . $key, $comment);
-    //         sleep(1);
-    //     }
-    // }
 
 }
