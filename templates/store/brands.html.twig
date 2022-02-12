@@ -2,6 +2,6 @@
 	<div class="list-group">
 		<a href="#" class="list-group-item active">Toutes les marques</a>
 		{% for brand in brands %}
-		<a href="#" class="list-group-item">{{brand.name|capitalize}}</a>
+		<a href="/store/product/{{brand.id}}" class="list-group-item">{{brand.name|capitalize}}</a>
 		{% endfor %}
 	</div>

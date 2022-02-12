@@ -31,12 +31,10 @@ class StoreController extends AbstractController
         $products = $this->em->getRepository(Product::class)->findAll();
 
         return $this->render('store/product.html.twig', [
-            'title' => "Store",
             'controller_name' => 'StoreController',
             'id' => $id,
             'slug' => $slug,
             'products' => $products,
-            // 'brands' => $brands,
             'brandId' => null,
             'ip' => $request->getClientIp(),
         ]);
@@ -47,22 +45,37 @@ class StoreController extends AbstractController
      */
     public function product_list(): Response
     {
+
         $products = $this->em->getRepository(Product::class)->findAll();
         $images = $this->em->getRepository(Image::class)->findAll();
-        $brands = $this->em->getRepository(Brand::class)->findAll();
-
+    
         return $this->render('store/product-list.html.twig', [
             'title' => 'Store',
             'products' => $products,
             'images' => $images,
-            'brands' => $brands,
             'brandId' => null,
-            
         ]);
     }
+
+    /** 
+     * @Route("/store/product/{brand}",name="store_brand_products",methods={"GET"}, requirements={"id"="\d+"})
+     */
+    public function product_brand(int $brand) : Response
+    {
+        $products =  $this->productRepository->getProductOfBrand($brand);
+                
+
+        return $this->render('store/product-list.html.twig', [
+            'controller_name' => 'StoreController',
+            'products' => $products,
+            'brandId' => $brand,
+        ]);
+    }
+    
     public function listBrandscontact($brand): Response
     {
         $brands = $this->em->getRepository(Brand::class)->findAll();
+       
         return $this->render('store/brands.html.twig', [
             'brands' => $brands,
             'brandId' => $brand,

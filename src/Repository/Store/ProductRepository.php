@@ -52,10 +52,10 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getProductsWithBrand(int $brand):array{
+    public function getProductOfBrand(int $brand):array{
         return $this
             ->createQueryBuilder('p')
-            ->where('p.Brands = :brand')
+            ->where('p.brand = :brand')
             ->setParameter('brand', $brand)
             ->getQuery()
             ->getResult();    

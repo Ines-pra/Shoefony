@@ -25,7 +25,6 @@
             {% for product in products %}
                 {% if product.id == id %}
                 <div class="thumbnail">
-                    {# <img class="img-responsive" src="{{ asset('img/products/shoe-' ~ id ~ '.png') }}" alt="" style="border-radius:15px;"> #}
                     <img class="img-responsive" src="{{ asset('' ~ product.image.url ~ '') }}" alt="{ product.image.alt }" style="border-radius:15px;">
                     <div class="caption-full">
                         <h4 class="pull-right"><span class="badge">{{ product.price }}€</span></h4>
@@ -33,7 +32,6 @@
                         <p>{{ product.description }}.</p>
                         <p>
                             Le produit est de la couleur suivante : 
-                            {# {{ product.colors.color_id }} #}
                             {% for color in product.colors %}
                                 {{ color.name ~(not loop.last ? ', ') }}
                             {% endfor %}
@@ -44,10 +42,6 @@
                         </p>
                     </div>
                 </div>	
-                {# {% elseif product.id != id %}
-                <div class="thumbnail">
-                    <h2> Erreur 404 </h2>
-                </div> #}
                 {% endif %}
 
             {% endfor %}
