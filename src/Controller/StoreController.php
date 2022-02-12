@@ -2,11 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Store\Product;
 use App\Repository\Store\ProductRepository;
-use App\Entity\Store\Image;
-use App\Entity\Store\Brand;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\Store\BrandRepository;
+use App\Repository\Store\ImageRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,13 +12,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class StoreController extends AbstractController
 {
-    private $em;
 
-    public function __construct(EntityManagerInterface $em,
-        private ProductRepository $productRepository)
-    {
-        $this->em = $em;
-    }
+    public function __construct(
+        private ProductRepository $productRepository,
+        private BrandRepository $brandRepository,
+        private ImageRepository $imageRepository)
+    {}
 
     /** 
      * @Route("/store/product/{id}/details/{slug}",name="store_show_product",methods={"GET"}, requirements={"id"="\d+"})
@@ -28,7 +25,7 @@ class StoreController extends AbstractController
     public function store(int $id, string $slug, Request $request) : Response
     {
         
-        $products = $this->em->getRepository(Product::class)->findAll();
+        $products = $this->productRepository->findAll();
 
         return $this->render('store/product.html.twig', [
             'controller_name' => 'StoreController',
@@ -46,8 +43,8 @@ class StoreController extends AbstractController
     public function product_list(): Response
     {
 
-        $products = $this->em->getRepository(Product::class)->findAll();
-        $images = $this->em->getRepository(Image::class)->findAll();
+        $products = $this->productRepository->findAll();
+        $images = $this->imageRepository->findAll();
     
         return $this->render('store/product-list.html.twig', [
             'title' => 'Store',
@@ -62,8 +59,8 @@ class StoreController extends AbstractController
      */
     public function product_brand(int $brand) : Response
     {
-        $products =  $this->productRepository->getProductOfBrand($brand);
-                
+
+        $products =  $this->productRepository->getProductOfBrand($brand);        
 
         return $this->render('store/product-list.html.twig', [
             'controller_name' => 'StoreController',
@@ -74,7 +71,8 @@ class StoreController extends AbstractController
     
     public function listBrandscontact($brand): Response
     {
-        $brands = $this->em->getRepository(Brand::class)->findAll();
+        
+        $brands = $this->brandRepository->findAll();
        
         return $this->render('store/brands.html.twig', [
             'brands' => $brands,
