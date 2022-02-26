@@ -19,7 +19,17 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
+    
+    public function getCommentOfProduct(int $product):array{
+        return $this
+            ->createQueryBuilder('p')
+            ->where('p.product = :product')
+            ->setParameter('product', $product)
+            ->orderBy('p.created_at', 'DESC')
+            ->getQuery()
+            ->getResult();    
+        ;
+    }
 
-
-   
 }
+

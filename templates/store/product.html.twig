@@ -6,7 +6,6 @@
     <p> {{ id }} : {{ slug }} </p>
     <p> Mon IP : {{ ip }} </p> #}
 
-
     <div class="row">
         <div class="col-md-3">
             <p class="lead">Nos marques</p>
@@ -47,48 +46,33 @@
             {% endfor %}
                 <div class="well">
                     <p class="pull-right label label-success">Actuellement 3 avis</p>
+
+                    {% for comment in comments %}
                     <div class="row">
                         <div class="col-md-12">
-                            <span class="label label-info">Prénom Nom</span>
-                            <span class="label label-default pull-right">28/01/2015</span>
-                            <p>Un commentaire sur le produit, rédigé par un client, sera affiché à cet endroit.</p>
+                            <span class="label label-info">{{comment.pseudo}}</span>
+                            <span class="label label-default pull-right">{{comment.createdAt|date('Y-m-d')}}</span>
+                            <p>{{comment.message}}</p>
                         </div>
                     </div>
 
                     <hr/>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <span class="label label-info">Prénom Nom</span>
-                            <span class="label label-default pull-right">28/01/2015</span>
-                            <p>Un commentaire sur le produit, rédigé par un client, sera affiché à cet endroit.</p>
-                        </div>
-                    </div>
-
-                    <hr/>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <span class="label label-info">Prénom Nom</span>
-                            <span class="label label-default pull-right">28/01/2015</span>
-                            <p>Un commentaire sur le produit, rédigé par un client, sera affiché à cet endroit.</p>
-                        </div>
-                    </div>
-
-                    <hr/>
-
-                    <div>
-                        <form>
+                    {% endfor %}
+                    <div>                       
+                        {{ form_start(form) }}
                             <div class="form-group">
-                                <label for="name">Votre nom</label>
-                                <input type="text" class="form-control" id="name">
+                                {{ form_errors(form.pseudo) }}
+                                {{ form_label(form.pseudo) }}
+                                {{ form_widget(form.pseudo, {'attr': {'class': 'form-control', 'placeholder':form.pseudo.vars.label} }) }}
                             </div>
                             <div class="form-group">
-                                <label for="message">Votre avis</label>
-                                <textarea class="form-control" name="comment" rows="3"></textarea>
+                                {{ form_errors(form.message) }}
+                                {{ form_label(form.message) }}
+                                {{ form_widget(form.message, {'attr': {'class': 'form-control', 'placeholder':form.message.vars.label} }) }}
                             </div>
-                            <button type="submit" class="btn btn-info">Envoyer mon avis</button>
-                        </form>
+                            <button type="submit" class="btn btn-info"> Envoyer mon message </button>
+                        {{ form_end(form) }}
+
                     </div>
                 </div>
             </div>

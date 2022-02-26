@@ -38,6 +38,70 @@ class AppFixtures extends Fixture
             'pseudo' => 'User4',
             'message' => 'Comment 4'
         ],
+        [
+            'pseudo' => 'User5',
+            'message' => 'Comment 5'
+        ],
+        [
+            'pseudo' => 'User6',
+            'message' => 'Comment 6'
+        ],
+        [
+            'pseudo' => 'User7',
+            'message' => 'Comment 7'
+        ],
+        [
+            'pseudo' => 'User8',
+            'message' => 'Comment 8'
+        ],
+        [
+            'pseudo' => 'User9',
+            'message' => 'Comment 9'
+        ],
+        [
+            'pseudo' => 'User10',
+            'message' => 'Comment 10'
+        ],
+        [
+            'pseudo' => 'User11',
+            'message' => 'Comment 11'
+        ],
+        [
+            'pseudo' => 'User12',
+            'message' => 'Comment 12'
+        ],
+        [
+            'pseudo' => 'User13',
+            'message' => 'Comment 13'
+        ],
+        [
+            'pseudo' => 'User14',
+            'message' => 'Comment 14'
+        ],
+        [
+            'pseudo' => 'User15',
+            'message' => 'Comment 15'
+        ],
+        [
+            'pseudo' => 'User16',
+            'message' => 'Comment 16'
+        ],
+        [
+            'pseudo' => 'User17',
+            'message' => 'Comment 17'
+        ],
+        [
+            'pseudo' => 'User18',
+            'message' => 'Comment 18'
+        ],
+        [
+            'pseudo' => 'User19',
+            'message' => 'Comment 19'
+        ],
+        [
+            'pseudo' => 'User20',
+            'message' => 'Comment 20'
+        ],
     ];
 
     private const DATA_BRANDS = [
@@ -226,15 +290,14 @@ class AppFixtures extends Fixture
             for($k = 0; $k < random_int(0,20); $k++){
                 $randomComment = random_int(0, count(self::DATA_COMMENTS)-1);
                 $comment = (new Comment())
+                    ->setProduct($product)
                     ->setPseudo(self::DATA_COMMENTS[$randomComment]['pseudo'])
                     ->setMessage(self::DATA_COMMENTS[$randomComment]['message'])
                 ;
                     
                 $product->addComment($comment);
                 $this->manager->persist($comment);
-
-
-        }
+            }
 
             $this->manager->persist($image);
             $this->manager->persist($product);

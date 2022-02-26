@@ -30,6 +30,7 @@ class ProductRepository extends ServiceEntityRepository
     /**
      * @return Product[]
      */
+   
     public function findByNameAndCreatedAt() : Array
     {
         return $this
@@ -38,6 +39,16 @@ class ProductRepository extends ServiceEntityRepository
             ->setMaxResults(4)
             ->getQuery()
             ->getResult();
+    }
+
+    public function findOneBySomeField($value): ?Product
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
     }
     
     public function whereCurrentYear() 
@@ -61,5 +72,6 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult();    
         ;
     }
+    
 
 }

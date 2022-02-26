@@ -2,13 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Store\Product;
 use App\Repository\Store\ProductRepository;
 
 use App\Entity\Contact;
 use App\Form\ContactType;
-use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
